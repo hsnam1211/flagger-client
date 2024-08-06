@@ -55,8 +55,6 @@ const TheFlagger = () => {
       style={{
         maxWidth: 500,
         width: "calc(100vw - 40px)",
-        // paddingRight: 20,
-        // paddingLeft: 20,
         height: "100vh",
         position: "relative",
       }}
@@ -71,10 +69,10 @@ const TheFlagger = () => {
       >
         <p style={{ color: "#000", fontSize: 30 }}>{text}</p>
       </div>
-      <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%" }}>
+      <div style={{ position: "fixed", bottom: 0, left: 0, width: "100%" }}>
         <button
           style={{
-            width: "100%",
+            width: "92%",
             borderRadius: 6,
             backgroundColor: "#fff",
             border: "1px solid #000",
@@ -95,7 +93,6 @@ const TheFlagger = () => {
             backgroundColor: "lightgray",
             width: "100vw",
             height: 70,
-            left: -20,
 
             position: "relative",
             display: "flex",
