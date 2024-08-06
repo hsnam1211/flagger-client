@@ -5,8 +5,8 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  /* background-color: #ffffff; */
-  background-color: #525254;
+  background-color: #ffffff;
+  /* background-color: #525254; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,14 +14,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-* { 
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 hr {
-
   border: 0;
   height: 1px;
   background: #828181;

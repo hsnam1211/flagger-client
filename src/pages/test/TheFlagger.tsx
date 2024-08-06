@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 const statusMsg = {
-  get: "깃발을 획득했습니다!",
-  out: "깃발을 잃었습니다.",
-  win: "축하합니다! 승자입니다.",
-  lose: "다음 승자를 위해 분발하세요!",
+  get: "5초만 버텨 🤭🤭",
+  out: "다른 사람이 채갔네.. \n 얼른 뺏으세요! 🥵🥵",
+  win: "WIN!!!! 🏆🏆",
+  lose: "... 분발하세요! 😊😊",
 };
 
 const TheFlagger = () => {
@@ -51,10 +51,62 @@ const TheFlagger = () => {
   };
 
   return (
-    <>
-      <p>{text}</p>
-      {status !== "get" && <button onClick={handleGrabFlag}>깃발 잡기!</button>}
-    </>
+    <div
+      style={{
+        maxWidth: 500,
+        width: "calc(100vw - 40px)",
+        // paddingRight: 20,
+        // paddingLeft: 20,
+        height: "100vh",
+        position: "relative",
+      }}
+    >
+      <div
+        style={{
+          height: "calc(100vh - 140px)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p style={{ color: "#000", fontSize: 30 }}>{text}</p>
+      </div>
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%" }}>
+        <button
+          style={{
+            width: "100%",
+            borderRadius: 6,
+            backgroundColor: "#fff",
+            border: "1px solid #000",
+            height: 70,
+            color: "#000",
+            fontWeight: 700,
+            fontSize: 18,
+            visibility: status !== "get" ? "visible" : "hidden",
+            marginBottom: 20,
+            boxShadow: "0px 1px 9px 2px #5700ff73",
+          }}
+          onClick={handleGrabFlag}
+        >
+          깃발 뺏기 😊
+        </button>
+        <div
+          style={{
+            backgroundColor: "lightgray",
+            width: "100vw",
+            height: 70,
+            left: -20,
+
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p>ad</p>
+        </div>
+      </div>
+    </div>
   );
 };
 
