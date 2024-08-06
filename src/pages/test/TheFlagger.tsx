@@ -15,7 +15,7 @@ const TheFlagger = () => {
   useEffect(() => {
     // const newSocket = new WebSocket("ws://localhost:8080");
     const newSocket = new WebSocket(
-      "ws://port-0-flagger-server-lzid9wad6bd5ffdc.sel4.cloudtype.app"
+      "wss://port-0-flagger-server-lzid9wad6bd5ffdc.sel4.cloudtype.app"
     );
 
     newSocket.onopen = () => {
