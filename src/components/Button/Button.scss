@@ -1,0 +1,79 @@
+$blue: #228be6;
+$gray: #495057;
+$pink: #f06595;
+
+@mixin button-color($color) {
+  background: $color;
+  &:hover {
+    background: lighten($color, 10%);
+  }
+  &:active {
+    background: darken($color, 10%);
+  }
+  &.outline {
+    color: $color;
+    background: none;
+    border: 1px solid $color;
+    &:hover {
+      background: $color;
+      color: white;
+    }
+  }
+}
+
+@mixin button-type($radius, $padding) {
+  border-radius: $radius;
+  padding: $padding;
+}
+
+.Button {
+  display: inline-flex;
+  color: white;  
+  outline: none;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 400;
+
+  // 버튼 모양 관리
+  &.a {
+    @include button-type(25px, 8px 20px);
+  }
+  &.b {
+    @include button-type(6px, 10px 20px);
+  }
+  &.c {
+    @include button-type(4px, 4px 8px);
+  }
+  &.d {
+    @include button-type(6px, 16px 40px);
+  }
+
+  // 색상 관리
+  &.blue {
+    @include button-color($blue);
+  }
+
+  &.gray {
+    @include button-color($gray);
+  }
+
+  &.pink {
+    @include button-color($pink);
+  }
+
+  & + & {
+    margin-left: 1rem;
+  }
+
+  &.fullWidth {
+    width: 100%;
+    justify-content: center;
+    & + & {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+  }
+}

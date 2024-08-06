@@ -1,0 +1,60 @@
+$all: #8B8EE8;
+$gray: #75768B;
+$orange: #FF6B00;
+$green: #00CE63;
+$pink: #FF7DA2;
+
+.Badge {
+  display: inline-flex;
+  color: white;
+  outline: none;
+  border-radius: 6px;
+  
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 12px;
+  justify-content: center;
+
+  // 색상 관리
+  &.all {
+    background: $all;
+  }
+
+  &.wait {
+    background: $gray;
+  }
+
+  &.reject {
+    background: $orange;
+  }
+  
+  &.progress {
+    background: $green;
+  }
+  
+  &.stop {
+    background: $pink;
+  }
+  
+  &.finished {
+    background: $pink;
+  }
+
+  & + & {
+    margin-left: 1rem;
+  }
+
+  &.round {
+    border-radius: 25px;
+  }
+
+  &.fullWidth {
+    width: 100%;
+    & + & {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+  }
+}
