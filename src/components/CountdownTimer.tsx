@@ -16,7 +16,7 @@ const CountdownTimer = ({ time }: { time?: number }) => {
     }
   }, [isActive, count]);
 
-  return <div>{isActive ? <h1>{count}</h1> : <h1>시간 종료!</h1>}</div>;
+  return <div>{isActive && <h1>{count}</h1>}</div>;
 };
 
 export default CountdownTimer;
