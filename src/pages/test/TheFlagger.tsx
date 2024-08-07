@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 
+import CountdownTimer from "@/components/CountdownTimer";
+
 const statusMsg = {
-  get: "5초만 버티세요! 🤭🤭",
+  get: "초만 버티세요! 🤭🤭",
   out: "다른 사람이 채갔네.. \n 얼른 뺏으세요! 🥵🥵",
   win: "WIN!!!! 🏆🏆",
   lose: "... 분발하세요! 😊😊",
 };
+
+const TIME = 3;
 
 const TheFlagger = () => {
   const [text, setText] = useState<string>("");
@@ -13,10 +17,10 @@ const TheFlagger = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   useEffect(() => {
-    // const newSocket = new WebSocket("ws://localhost:8080");
-    const newSocket = new WebSocket(
-      "wss://port-0-flagger-server-lzid9wad6bd5ffdc.sel4.cloudtype.app"
-    );
+    const newSocket = new WebSocket("ws://localhost:8080");
+    // const newSocket = new WebSocket(
+    //   "wss://port-0-flagger-server-lzid9wad6bd5ffdc.sel4.cloudtype.app"
+    // );
 
     newSocket.onopen = () => {
       console.log("서버에 연결되었습니다.");
@@ -44,7 +48,7 @@ const TheFlagger = () => {
 
   const handleGrabFlag = () => {
     if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send("grabFlag");
+      socket.send(JSON.stringify({ msg: "grabFlag", time: TIME }));
     } else {
       console.log("서버와의 연결이 아직 완료되지 않았습니다.");
     }
@@ -65,8 +69,12 @@ const TheFlagger = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          color: "#000",
         }}
       >
+        <div style={{ color: "#000", fontSize: 30 }}>
+          {status === "get" && <CountdownTimer time={TIME} />}
+        </div>
         <p style={{ color: "#000", fontSize: 30 }}>{text}</p>
       </div>
       <div style={{ position: "fixed", bottom: 0, left: 0, width: "100%" }}>
