@@ -17,10 +17,10 @@ const TheFlagger = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   useEffect(() => {
-    // const newSocket = new WebSocket("ws://localhost:8080");
-    const newSocket = new WebSocket(
-      "wss://port-0-flagger-server-lzid9wad6bd5ffdc.sel4.cloudtype.app"
-    );
+    const newSocket = new WebSocket("ws://localhost:8080");
+    // const newSocket = new WebSocket(
+    //   "wss://port-0-flagger-server-lzid9wad6bd5ffdc.sel4.cloudtype.app"
+    // );
 
     newSocket.onopen = () => {
       console.log("서버에 연결되었습니다.");
