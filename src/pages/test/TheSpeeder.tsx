@@ -9,56 +9,42 @@ const TheSpeeder: React.FC = () => {
   const [winner, setWinner] = useState<boolean | null>(null);
   const [bgColor, setBgColor] = useState<string>("white");
 
-  const [totalCount, setTotalCount] = useState<number>(0);
+  const [totalConnectCount, setTotalConnectCount] = useState<number>(0);
+  const [totalClickCount, setTotalClickCount] = useState<number>(0);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    const newSocket = new WebSocket("ws://localhost:8080");
+    //"wss://port-0-flagger-server-lzid9wad6bd5ffdc.sel4.cloudtype.app"
+    newSocket.onmessage = event => {
+      const message = event.data;
 
-    if (gameState === "setting") {
-      timer = setTimeout(() => {
-        setGameState("countdown");
-      }, 10000); // 10초 후 카운트다운 시작
-    } else if (gameState === "countdown") {
-      let blinkTimer: NodeJS.Timeout;
+      if (message.startsWith("카운트다운: ")) {
+        const count = parseInt(message.split(": ")[1]);
+        setCountdown(count);
+        // setBgColor((prev) => (prev === "#f56464" ? "#f5c9c9" : "#f56464")); // 깜빡임 효과
+      } else if (message === "게임 시작!") {
+        setGameState("playing");
+      } else if (message === "버튼 노출!") {
+        setButtonVisible(true);
+      } else if (message === "게임 종료!") {
+        setButtonVisible(false);
+        endGame();
+      }
 
-      blinkTimer = setInterval(() => {
-        setBgColor((prev) => (prev === "#ff0000" ? "#c0392b" : "#ff0000")); // 붉은색과 다홍색 깜빡임
-      }, 300); // 0.3초마다 색상 변경
+      if (message.includes("totalCount")) {
+        setTotalConnectCount(JSON.parse(message).totalCount);
+      }
+    };
 
-      timer = setTimeout(() => {
-        clearInterval(blinkTimer); // 카운트다운 종료 후 깜빡임 종료
-        setBgColor("white"); // 배경색 흰색으로
-        startGame();
-      }, 5000); // 카운트다운 후 게임 시작
+    // 게임 시작 요청
+    newSocket.onopen = () => {
+      newSocket.send(JSON.stringify("startGame"));
+    };
 
-      // 카운트다운 로직
-      setCountdown(5);
-      const countdownTimer = setInterval(() => {
-        setCountdown((prev) => {
-          if (prev === 1) {
-            clearInterval(countdownTimer);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000); // 1초마다 카운트다운
-
-      return () => {
-        clearInterval(blinkTimer);
-        clearInterval(countdownTimer);
-      };
-    } else if (gameState === "playing") {
-      timer = setTimeout(() => {
-        setButtonVisible(true); // 랜덤한 시간에 버튼 노출
-        setTimeout(() => {
-          setButtonVisible(false);
-          endGame();
-        }, 5000); // 5초 후 게임 종료
-      }, Math.random() * 5000); // 0~5초 랜덤
-    }
-
-    return () => clearTimeout(timer);
-  }, [gameState]);
+    return () => {
+      newSocket.close();
+    };
+  }, []);
 
   const startGame = () => {
     setGameState("playing");
@@ -80,35 +66,6 @@ const TheSpeeder: React.FC = () => {
   };
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
-  useEffect(() => {
-    const newSocket = new WebSocket("ws://localhost:8080");
-    // const newSocket = new WebSocket(
-    //   "wss://port-0-flagger-server-lzid9wad6bd5ffdc.sel4.cloudtype.app"
-    // );
-
-    newSocket.onopen = () => {
-      console.log("서버에 연결되었습니다.");
-      // handleGrabFlag();
-    };
-
-    newSocket.onmessage = (event) => {
-      // const message = event.data as keyof typeof statusMsg; // event.data의 타입을 지정
-      // setText(statusMsg[message] || "알 수 없는 메시지입니다."); // 기본 메시지 추가
-      // setStatus(message);
-    };
-
-    newSocket.onclose = () => {
-      console.log("서버와의 연결이 종료되었습니다.");
-      // 여기에 재연결 로직 추가 가능
-    };
-
-    setSocket(newSocket);
-
-    // 컴포넌트 언마운트 시 소켓 종료
-    return () => {
-      newSocket.close();
-    };
-  }, []);
   return (
     <div
       style={{
@@ -119,7 +76,8 @@ const TheSpeeder: React.FC = () => {
         width: "100vw",
       }}
     >
-      <div>{totalCount}</div>
+      <div>{`전체 접속자 수: ${totalConnectCount}`}</div>
+      <div>{`클릭 수: ${totalClickCount}`}</div>
       {gameState === "setting" && <h2>게임 세팅 중...</h2>}
       {gameState === "countdown" && <h2>게임 시작: {countdown}</h2>}
       {gameState === "playing" && (
