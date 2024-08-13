@@ -18,13 +18,7 @@ const TheSvg = () => {
     setRadius(prev => (prev < 50 ? prev + 10 : prev)); // 최대 반지름을 50으로 설정
   };
 
-  return (
-    <div>
-      <h1>Dynamic SVG Example</h1>
-      <DynamicSvg value={radius} />
-      <button onClick={increaseRadius}>Increase Radius</button>
-    </div>
-  );
+  return <DynamicSvg value={radius} />;
 };
 
 export default TheSvg;
