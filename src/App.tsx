@@ -17,7 +17,7 @@ function App() {
         <Route path="*" element={<TestPage />} />
         <Route path="/flagger" element={<TheFlagger />} />
         <Route path="/speeder" element={<TheSpeeder />} />
-        <Route path="/thesvg.svg" element={<TheSvg />} />
+        <Route path="/thesvg" element={<TheSvg />} />
       </Routes>
     </BrowserRouter>
   );
